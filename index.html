@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+<div id="today"></div>
+<div id="left-time"></div>
+<script>
+    window.onload = function () {
+
+        getTime();
+
+//显示今天的时间
+        function getTime() {
+            var currentDate = new Date();
+            var year = currentDate.getFullYear();
+            var month = currentDate.getMonth() + 1;
+            var date = currentDate.getDate();
+            var day = currentDate.getDay();
+            var hour = checkTime(currentDate.getHours());
+            var minute = checkTime(currentDate.getMinutes());
+            var seconds = checkTime(currentDate.getSeconds());
+            var weekday = [
+                "星期日",
+                "星期一",
+                "星期二",
+                "星期三",
+                "星期四",
+                "星期五",
+                "星期六"
+            ];
+            document.getElementById("today").innerHTML = year + "年" + month + "月" + date + "日" + "  " + weekday[day] +
+                    hour + ":" + minute + ":" + seconds;
+            setTimeout(getTime, 10);
+
+        }
+
+        setTime();
+        //显示剩余的时间
+        function setTime() {
+            var currentTime = new Date();
+            var deadTime = new Date(2020, 5, 6);
+            var leftTime = parseInt((deadTime - currentTime) / 1000);
+            var days = parseInt(leftTime / (24 * 60 * 60));
+            var hours = checkTime(parseInt(leftTime / (60 * 60) % 24));
+            var minutes = checkTime(parseInt(leftTime / 60 % 60));
+            var seconds = checkTime(parseInt(leftTime % 60));
+            document.getElementById("left-time").innerHTML = "距2020年6月6日还剩: " + days + "天" + hours + "小时" +
+                    minutes + "分" + seconds + "秒";
+
+            if (leftTime <= 0) {
+                document.getElementById("left-time").innerHTML = "活动已结束";
+            }
+            setTimeout(setTime, 10);
+
+        }
+
+        function checkTime(time) {
+            if (time < 10) {
+                time = "0" + time;
+            }
+            return time;
+        }
+    };
+</script>
+</body>
+</html>
